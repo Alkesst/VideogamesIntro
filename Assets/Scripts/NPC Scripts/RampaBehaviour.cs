@@ -5,7 +5,7 @@ public class RampaBehaviour : MonoBehaviour
 {
     private enum States { andando, buscando, combatiendo }
     private readonly float AGENT_SPEED_PATROL = 4f;
-    private readonly float AGENT_SPEED_FIGHT = 4f;
+    private readonly float AGENT_SPEED_FIGHT = 3f;
     private readonly Vector3 LOOKUP_INITIAL = new Vector3(25, 1, -20);
     private readonly Vector3 LOOKUP_FINAL = new Vector3(-25, 1, -20);
     private readonly float LOOKUP_SPEED = 10f;
@@ -83,11 +83,13 @@ public class RampaBehaviour : MonoBehaviour
             } else if (raycastHit.collider.gameObject.layer == 9)
             {
                 Debug.DrawRay(transform.position, transform.forward * 50, Color.black);
+                state = (state == States.andando) ? States.andando : States.buscando;
                 player = null;
             }
         } else
         {
             Debug.DrawRay(transform.position, transform.forward * 50, Color.black);
+            state = (state == States.andando) ? States.andando : States.buscando;
         }
 
     }
