@@ -39,16 +39,12 @@ public class RampaBehaviour : MonoBehaviour
                 agent.speed = AGENT_SPEED_PATROL;
                 state = States.buscando;
                 currentTime = Time.time;
-            } else if (state == States.combatiendo)
-            {
-                transform.LookAt(player.transform);
-                agent.speed = AGENT_SPEED_FIGHT;
-                agent.SetDestination(player.transform.position);
             }
         } else if (state == States.buscando)
         {
             float distCovered = (Time.time - currentTime) * LOOKUP_SPEED;
             float fractionOfJourney = distCovered / LOOKUP_LENGTH;
+            // esto es horrible por favor no lo hagais en casa pero yo solo quiero aprobar me da igual la calidad del codigo
             if (current == 0) {
                 transform.LookAt(Vector3.Lerp(LOOKUP_INITIAL + new Vector3(0, 0, 50), LOOKUP_FINAL + new Vector3(0, 0, 50), fractionOfJourney));
             } else
@@ -60,7 +56,39 @@ public class RampaBehaviour : MonoBehaviour
                 agent.SetDestination(path[current].transform.position);
                 state = States.andando;
             }
+        } else if (state == States.combatiendo)
+        {
+            transform.LookAt(player.transform);
+            agent.speed = AGENT_SPEED_FIGHT;
+            agent.SetDestination(player.transform.position);
         }
-        
+        RayCasting();
+    }
+
+    private void RayCasting()
+    {
+        int maskPlayer = 1 << 10;
+        int maskScene = 1 << 9;
+        int layerMask = maskPlayer | maskScene;
+        RaycastHit raycastHit;
+
+        if(Physics.Raycast(transform.position, transform.forward, out raycastHit, 50, layerMask))
+        {
+            if(raycastHit.collider.gameObject.layer == 10)
+            {
+                Debug.DrawRay(transform.position, transform.forward * raycastHit.distance, Color.red);
+                state = States.combatiendo;
+                player = raycastHit.collider.gameObject;
+                print("Nigga pizza");
+            } else if (raycastHit.collider.gameObject.layer == 9)
+            {
+                Debug.DrawRay(transform.position, transform.forward * 50, Color.black);
+                player = null;
+            }
+        } else
+        {
+            Debug.DrawRay(transform.position, transform.forward * 50, Color.black);
+        }
+
     }
 }
