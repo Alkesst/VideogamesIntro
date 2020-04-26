@@ -4,8 +4,8 @@ using UnityEngine.AI;
 public class RampaBehaviour : MonoBehaviour
 {
     private enum States { andando, buscando, combatiendo }
-    private readonly float AGENT_SPEED_PATROL = 4f;
-    private readonly float AGENT_SPEED_FIGHT = 3f;
+    private readonly float AGENT_SPEED_PATROL = 0f;
+    private readonly float AGENT_SPEED_FIGHT = 0f;
     private readonly Vector3 LOOKUP_INITIAL = new Vector3(25, 1, -20);
     private readonly Vector3 LOOKUP_FINAL = new Vector3(-25, 1, -20);
     private readonly float LOOKUP_SPEED = 10f;
@@ -33,6 +33,7 @@ public class RampaBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (player == null) state = States.andando;
         if(state == States.andando)
         {
             if(agent.remainingDistance <= agent.stoppingDistance)
@@ -102,6 +103,7 @@ public class RampaBehaviour : MonoBehaviour
         if(Time.time > lastShot + SHOT_CADENCE)
         {
             GameObject bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
+            bullet.layer = 11;
             Destroy(bullet, 1.5f);
             lastShot = Time.time;
         }

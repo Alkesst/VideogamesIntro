@@ -15,13 +15,9 @@ public class compBala : MonoBehaviour
     {
         if (collider.gameObject.layer == 10)
         {
-            Rigidbody rigidBody = collider.GetComponent<Rigidbody>();
-            print(rigidBody.tag);
-            if (rigidBody != null)
+            Collider colliderPlayer = collider.GetComponent<Collider>();
+            if (colliderPlayer != null)
             {
-                print("Nigga toilet");
-                float fuerza = 10000f;
-                rigidBody.AddExplosionForce(fuerza, transform.position, 20f);
                 Destroy(gameObject);
             }
         }
