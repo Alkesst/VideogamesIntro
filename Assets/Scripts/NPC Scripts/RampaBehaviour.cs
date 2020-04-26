@@ -10,13 +10,16 @@ public class RampaBehaviour : MonoBehaviour
     private readonly Vector3 LOOKUP_FINAL = new Vector3(-25, 1, -20);
     private readonly float LOOKUP_SPEED = 10f;
     private float LOOKUP_LENGTH;
+    private readonly float SHOT_CADENCE = 2f;
 
+    public GameObject bulletPrefab;
     public NavMeshAgent agent;
     private States state;
     public GameObject[] path;
     private int current;
     private GameObject player;
     private float currentTime = 0;
+    private float lastShot;
 
     // Start is called before the first frame update
     void Start()
@@ -61,6 +64,7 @@ public class RampaBehaviour : MonoBehaviour
             transform.LookAt(player.transform);
             agent.speed = AGENT_SPEED_FIGHT;
             agent.SetDestination(player.transform.position);
+            Shoot();
         }
         RayCasting();
     }
@@ -79,7 +83,6 @@ public class RampaBehaviour : MonoBehaviour
                 Debug.DrawRay(transform.position, transform.forward * raycastHit.distance, Color.red);
                 state = States.combatiendo;
                 player = raycastHit.collider.gameObject;
-                print("Nigga pizza");
             } else if (raycastHit.collider.gameObject.layer == 9)
             {
                 Debug.DrawRay(transform.position, transform.forward * 50, Color.black);
@@ -92,5 +95,15 @@ public class RampaBehaviour : MonoBehaviour
             state = (state == States.andando) ? States.andando : States.buscando;
         }
 
+    }
+
+    private void Shoot()
+    {
+        if(Time.time > lastShot + SHOT_CADENCE)
+        {
+            GameObject bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
+            Destroy(bullet, 1.5f);
+            lastShot = Time.time;
+        }
     }
 }
