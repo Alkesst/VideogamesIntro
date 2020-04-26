@@ -3,7 +3,7 @@
 //ESTE EL CODIGO DE PROYECTIL (CP1) DEL TEMA 2.4-C
 // Note produce efectos de explosión para objetos del layer = 8 solamente
 
-public class compBala : MonoBehaviour
+public class compBalaPlayer : MonoBehaviour
 {
 
     void Update()
@@ -13,7 +13,7 @@ public class compBala : MonoBehaviour
 
     private void OnTriggerEnter(Collider collider)
     {
-        if (collider.gameObject.layer == 10 || collider.gameObject.layer == 9)
+        if (collider.gameObject.layer == 8 || collider.gameObject.layer == 9)
         {
             Collider colliderPlayer = collider.GetComponent<Collider>();
             if (colliderPlayer != null)

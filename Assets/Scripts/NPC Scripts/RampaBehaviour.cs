@@ -22,8 +22,9 @@ public class RampaBehaviour : MonoBehaviour
     private float currentTime = 0;
     private float lastShot;
 
-    private int HP = 20;
+    private int HP = 3;
     private float lastHitTime = 0;
+    public Transform bulletPosition;
 
     // Start is called before the first frame update
     void Start()
@@ -105,7 +106,7 @@ public class RampaBehaviour : MonoBehaviour
     {
         if(Time.time > lastShot + SHOT_CADENCE)
         {
-            GameObject bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
+            GameObject bullet = Instantiate(bulletPrefab, bulletPosition.position, transform.rotation);
             bullet.layer = 11;
             Destroy(bullet, 1.5f);
             lastShot = Time.time;
@@ -114,17 +115,19 @@ public class RampaBehaviour : MonoBehaviour
 
     private void OnTriggerEnter(Collider collider)
     {
-        if (collider.gameObject.layer == 14 && Time.time >= lastHitTime + 1F)
+        if (collider.gameObject.layer == 14 && Time.time >= lastHitTime + 0.25F)
         {
             lastHitTime = Time.time;
             HP--;
             if (HP <= 0)
             {
-                Destroy(gameObject);
-                GameObject go = Instantiate(ammoPrefab, transform);
+                GameObject go = Instantiate(ammoPrefab);
                 go.layer = 12;
-                go = Instantiate(healPrefab, transform);
+                go.transform.position = transform.position + new Vector3(2, 0.25f, 0);
+                go = Instantiate(healPrefab);
                 go.layer = 13;
+                go.transform.position = transform.position + new Vector3(-2, 0.25f, 0);
+                Destroy(gameObject);
             }
         }
     }
