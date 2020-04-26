@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,17 +13,20 @@ public class PlayerController : MonoBehaviour
     private float lastDrop = 0;
     private float lastShot = 0;
     public Transform bulletPosition;
+    public Text text;
     // Start is called before the first frame update
     void Start()
     {
-        ammo = 105;
+        ammo = 15;
+        text.text = "HP: " + HP + "  -   Ammo: " + ammo;
     }
 
     // Update is called once per frame
     void Update()
     {
+        text.text = "HP: " + HP + "  -   Ammo: " + ammo;
         // preparado para que cuando le de a la q lance municion enfrente tuya;
-        if(Input.GetKey("q") && Time.time - lastDrop > 1)
+        if (Input.GetKey("q") && Time.time - lastDrop > 1)
         {
             DropAmmo();
         }
