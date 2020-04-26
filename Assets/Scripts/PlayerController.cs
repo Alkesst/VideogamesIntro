@@ -44,14 +44,9 @@ public class PlayerController : MonoBehaviour
         } else if (collider.gameObject.layer == 12)
         {
             ammo += 5;
-            GameObject collidedObject = collider.GetComponent<GameObject>();
-            print("Hola");
-            Destroy(collidedObject);
         } else if (collider.gameObject.layer == 13)
         {
             HP += 5;
-            GameObject collidedObject = collider.GetComponent<GameObject>();
-            Destroy(collidedObject);
         }
     }
 }

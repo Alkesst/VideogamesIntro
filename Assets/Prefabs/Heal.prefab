@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3291684033474519160}
-  - component: {fileID: 3214509025183273805}
+  - component: {fileID: 8238634367219915231}
   m_Layer: 0
   m_Name: Heal
   m_TagString: Untagged
@@ -33,7 +33,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3214509025183273805
+--- !u!114 &8238634367219915231
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,7 +42,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 540140203733185713}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbd9fc7e5ff357944b4bfc3f939bd9c7, type: 3}
+  m_Script: {fileID: 11500000, guid: 1cc1ea2a8caae9748bf53aa5888397c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1449162503747177342
