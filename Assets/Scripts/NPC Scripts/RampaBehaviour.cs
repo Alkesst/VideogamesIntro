@@ -45,7 +45,7 @@ public class RampaBehaviour : MonoBehaviour
             float distCovered = (Time.time - currentTime) * LOOKUP_SPEED;
             float fractionOfJourney = distCovered / LOOKUP_LENGTH;
             // esto es horrible por favor no lo hagais en casa pero yo solo quiero aprobar me da igual la calidad del codigo
-            if (current == 0) {
+            if (current == 2 || current == 3 || current == 0) {
                 transform.LookAt(Vector3.Lerp(LOOKUP_INITIAL + new Vector3(0, 0, 50), LOOKUP_FINAL + new Vector3(0, 0, 50), fractionOfJourney));
             } else
             {
