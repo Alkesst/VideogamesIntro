@@ -14314,6 +14314,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 714bf26000d4e964b98f91155a0621c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healPrefab: {fileID: 540140203733185713, guid: feedca6d9f9bc944480ed0e82493c39d,
+    type: 3}
+  ammoPrefab: {fileID: 8090779795106657251, guid: 0aaf3e8cfbd7baf47a4f2016eb8e7a90,
+    type: 3}
   bulletPrefab: {fileID: 205031036583584627, guid: 8cb77eb6340543e4088b7f68884c0b38,
     type: 3}
   agent: {fileID: 1025866212}
@@ -24075,8 +24079,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   velocidadMovimiento: 4
   velocidadRotacion: 1
+  ammoPrefab: {fileID: 8090779795106657251, guid: 0aaf3e8cfbd7baf47a4f2016eb8e7a90,
+    type: 3}
   ammo: 0
-  paqueteMunicion: {fileID: 0}
 --- !u!54 &1846874867
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -4,13 +4,14 @@ using UnityEngine.AI;
 public class RampaBehaviour : MonoBehaviour
 {
     private enum States { andando, buscando, combatiendo }
-    private readonly float AGENT_SPEED_PATROL = 0f;
-    private readonly float AGENT_SPEED_FIGHT = 0f;
+    private readonly float AGENT_SPEED_PATROL = 4f;
+    private readonly float AGENT_SPEED_FIGHT = 3f;
     private readonly Vector3 LOOKUP_INITIAL = new Vector3(25, 1, -20);
     private readonly Vector3 LOOKUP_FINAL = new Vector3(-25, 1, -20);
     private readonly float LOOKUP_SPEED = 10f;
     private float LOOKUP_LENGTH;
     private readonly float SHOT_CADENCE = 2f;
+    public GameObject healPrefab, ammoPrefab;
 
     public GameObject bulletPrefab;
     public NavMeshAgent agent;
@@ -20,6 +21,9 @@ public class RampaBehaviour : MonoBehaviour
     private GameObject player;
     private float currentTime = 0;
     private float lastShot;
+
+    private int HP = 20;
+    private float lastHitTime = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -33,7 +37,6 @@ public class RampaBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (player == null) state = States.andando;
         if(state == States.andando)
         {
             if(agent.remainingDistance <= agent.stoppingDistance)
@@ -87,8 +90,8 @@ public class RampaBehaviour : MonoBehaviour
             } else if (raycastHit.collider.gameObject.layer == 9)
             {
                 Debug.DrawRay(transform.position, transform.forward * 50, Color.black);
-                state = (state == States.andando) ? States.andando : States.buscando;
                 player = null;
+                state = (state == States.andando) ? States.andando : States.buscando;
             }
         } else
         {
@@ -106,6 +109,23 @@ public class RampaBehaviour : MonoBehaviour
             bullet.layer = 11;
             Destroy(bullet, 1.5f);
             lastShot = Time.time;
+        }
+    }
+
+    private void OnTriggerEnter(Collider collider)
+    {
+        if (collider.gameObject.layer == 14 && Time.time >= lastHitTime + 1F)
+        {
+            lastHitTime = Time.time;
+            HP--;
+            if (HP <= 0)
+            {
+                Destroy(gameObject);
+                GameObject go = Instantiate(ammoPrefab, transform);
+                go.layer = 12;
+                go = Instantiate(healPrefab, transform);
+                go.layer = 13;
+            }
         }
     }
 }

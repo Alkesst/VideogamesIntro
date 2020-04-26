@@ -4,11 +4,12 @@ public class PlayerController : MonoBehaviour
 {
     public float velocidadMovimiento;
     public float velocidadRotacion;
+    public GameObject ammoPrefab;
     public int ammo;
-    public GameObject paqueteMunicion;
     private int HP = 20;
     private float lastHitTime = 0;
     private readonly float SHOT_CADENCE = 1f;
+    private float lastDrop = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,11 +20,13 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         // preparado para que cuando le de a la q lance municion enfrente tuya;
-        if(false)
+        if(Input.GetKey("q") && Time.time - lastDrop > 1)
         {
             ammo -= 5;
-            Instantiate(paqueteMunicion);
-            paqueteMunicion.transform.position = transform.position - new Vector3(1, 0 , 1);
+            GameObject ammoGo = Instantiate(ammoPrefab);
+            ammoGo.layer = 12;
+            ammoGo.transform.position = transform.position + new Vector3(2, 0.25f , 0);
+            lastDrop = Time.time;
         } 
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
